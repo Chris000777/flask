@@ -53,7 +53,7 @@ def index():
         cursor.execute(sql)
         productos=cursor.fetchall()
         conn.commit()
-        return render_template('productos/index.html', productos=productos)
+        return render_template('/index.html', productos=productos)
 
 @app.route('/destroy/<int:id>')
 def destroy(id):
@@ -63,7 +63,7 @@ def destroy(id):
         conn.commit()
         nombreFoto= cursor.fetchone()[0]
         try:
-                os.remove(os.path.join('uploads/', nombreFoto))
+                os.remove(os.path.join('/uploads/', nombreFoto))
         except:
                 pass
         cursor.execute("DELETE FROM `sql10508116`.`productos` WHERE id=%s",id)
@@ -77,7 +77,7 @@ def edit(id):
     cursor.execute("SELECT * FROM `sql10508116`.`productos` WHERE id=%s", id)  
     productos=cursor.fetchall()
     conn.commit()  
-    return render_template('productos/edit.html', productos=productos)
+    return render_template('/edit.html', productos=productos)
 
 @app.route('/update', methods=['POST'])
 def update():
