@@ -11,9 +11,9 @@ CORS(app)
 app.secret_key="ClaveSecreta"
 mysql=MySQL()
 app.config['MYSQL_DATABASE_HOST']='sql10.freemysqlhosting.net'
-app.config['MYSQL_DATABASE_USER']='sql10508116'
-app.config['MYSQL_DATABASE_PASSWORD']='AwDfcSGdnw'
-app.config['MYSQL_DATABASE_BD']='sql10508116'
+app.config['MYSQL_DATABASE_USER']='sql10511598'
+app.config['MYSQL_DATABASE_PASSWORD']='lmGadHMnSr'
+app.config['MYSQL_DATABASE_BD']='sql10511598'
 mysql.init_app(app)
 
 @app.route('/')
@@ -31,7 +31,7 @@ def uploads(nombreFoto):
 
 @app.route('/productos')
 def empleados():        
-        sql="SELECT * FROM `sql10508116`.`productos`;"
+        sql="SELECT * FROM `sql10511598`.`productos`;"
         conn=mysql.connect()
         cursor=conn.cursor()
         cursor.execute(sql)
@@ -47,7 +47,7 @@ def empleados():
 
 @app.route('/index')
 def index():
-        sql="SELECT * FROM `sql10508116`.`productos`;"
+        sql="SELECT * FROM `sql10511598`.`productos`;"
         conn=mysql.connect()
         cursor=conn.cursor()
         cursor.execute(sql)
@@ -59,14 +59,14 @@ def index():
 def destroy(id):
         conn=mysql.connect()
         cursor=conn.cursor()
-        cursor.execute("SELECT foto FROM `sql10508116`.`productos` WHERE id=%s",id)
+        cursor.execute("SELECT foto FROM `sql10511598`.`productos` WHERE id=%s",id)
         conn.commit()
         nombreFoto= cursor.fetchone()[0]
         try:
                 os.remove(os.path.join('/uploads/', nombreFoto))
         except:
                 pass
-        cursor.execute("DELETE FROM `sql10508116`.`productos` WHERE id=%s",id)
+        cursor.execute("DELETE FROM `sql10511598`.`productos` WHERE id=%s",id)
         conn.commit()
         return redirect('/')
 
@@ -74,7 +74,7 @@ def destroy(id):
 def edit(id):
     conn=mysql.connect()
     cursor=conn.cursor()
-    cursor.execute("SELECT * FROM `sql10508116`.`productos` WHERE id=%s", id)  
+    cursor.execute("SELECT * FROM `sql10511598`.`productos` WHERE id=%s", id)  
     productos=cursor.fetchall()
     conn.commit()  
     return render_template('/edit.html', productos=productos)
@@ -96,17 +96,17 @@ def update():
         if _foto.filename!='':
                 nuevoNombre=tiempo+_foto.filename
                 _foto.save("uploads/"+nuevoNombre)
-                cursor.execute("SELECT foto FROM `sql10508116`.`productos` WHERE id=%s",id)
+                cursor.execute("SELECT foto FROM `sql10511598`.`productos` WHERE id=%s",id)
                 conn.commit()
                 nombreFoto= cursor.fetchone()[0]
                 try:
                         os.remove(os.path.join('uploads/', nombreFoto))
                 except:
                         pass
-                cursor.execute("UPDATE `sql10508116`.`productos` SET foto=%s WHERE id=%s", (nuevoNombre, id))
+                cursor.execute("UPDATE `sql10511598`.`productos` SET foto=%s WHERE id=%s", (nuevoNombre, id))
                 conn.commit()
 
-        sql = "UPDATE `sql10508116`.`productos` SET `nombre`=%s, `descripcion`=%s, `precio`=%s  WHERE id=%s;"
+        sql = "UPDATE `sql10511598`.`productos` SET `nombre`=%s, `descripcion`=%s, `precio`=%s  WHERE id=%s;"
         cursor.execute(sql,datos)
         conn.commit()
         return redirect('/')
@@ -134,7 +134,7 @@ def storage():
                 _foto.save("uploads/"+nuevoNombre)
 
         
-        sql="INSERT INTO `sql10508116`.`productos` (`id`, `nombre`, `descripcion`, `precio`, `foto`) VALUES (NULL, %s, %s, %s, %s);"
+        sql="INSERT INTO `sql10511598`.`productos` (`id`, `nombre`, `descripcion`, `precio`, `foto`) VALUES (NULL, %s, %s, %s, %s);"
         datos=(_nombre,_descripcion ,_precio, nuevoNombre)
         conn=mysql.connect()
         cursor=conn.cursor()
